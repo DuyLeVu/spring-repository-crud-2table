@@ -42,6 +42,7 @@
                 <td>Category:</td>
                 <td>
                     <select th:field="*{category}">
+                        <option value="">Category</option>
                         <option th:each="category :${category}" th:value="${category.getId()}"
                                 th:text="${category.getName()}"></option>
                     </select>

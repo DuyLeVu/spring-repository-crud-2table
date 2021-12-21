@@ -4,6 +4,9 @@ package controller;
 import model.Category;
 import model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -75,30 +78,29 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ModelAndView showList(String Search) {
-        Iterable<Product> products = new ArrayList<>();
-        ModelAndView modelAndView = new ModelAndView("/product/list");
-        if (Search == null) {
-            products = productService.findAll();
+    public ModelAndView showList(String search, @PageableDefault(value = 5) Pageable pageable) {
+        Page<Product> products;
+        if (search == null) {
+            products = productService.findAll(pageable);
         } else {
-            products = productService.findByName(Search);
-            modelAndView.addObject("message", "back home");
+            products = productService.findByName(search, pageable);
         }
+        ModelAndView modelAndView = new ModelAndView("/product/list");
         modelAndView.addObject("products", products);
+        modelAndView.addObject("search", search);
         return modelAndView;
     }
-
-    @PostMapping("")
-    public ModelAndView showListSorted(String Search) {
-        Iterable<Product> products = new ArrayList<>();
-        ModelAndView modelAndView = new ModelAndView("/product/list");
-        if (Search == null) {
-            products = productService.findAllByOrderByPrice();
-        } else {
-            products = productService.findByName(Search);
-            modelAndView.addObject("message", "back home");
-        }
-        modelAndView.addObject("products", products);
-        return modelAndView;
-    }
+//
+//    @PostMapping("")
+//    public ModelAndView showListSorted(String Search, Pageable pageable) {
+//        Iterable<Product> products = new ArrayList<>();
+//        ModelAndView modelAndView = new ModelAndView("/product/list");
+//        if (Search == null) {
+//            products = productService.findAllByOrderByPrice();
+//        } else {
+//            products = productService.findByName(Search, pageable);
+//        }
+//        modelAndView.addObject("products", products);
+//        return modelAndView;
+//    }
 }
