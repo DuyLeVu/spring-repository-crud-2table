@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import service.category.ICategoryService;
 import service.product.IProductService;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -40,7 +41,7 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView showEditForm(@PathVariable int id){
+    public ModelAndView showEditForm(@PathVariable int id) {
         Optional<Product> product = productService.findById(id);
         ModelAndView modelAndView = new ModelAndView("/product/edit");
         modelAndView.addObject("product", product);
@@ -74,9 +75,29 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ModelAndView listCustomers() {
-        Iterable<Product> products = productService.findAll();
+    public ModelAndView showList(String Search) {
+        Iterable<Product> products = new ArrayList<>();
         ModelAndView modelAndView = new ModelAndView("/product/list");
+        if (Search == null) {
+            products = productService.findAll();
+        } else {
+            products = productService.findByName(Search);
+            modelAndView.addObject("message", "back home");
+        }
+        modelAndView.addObject("products", products);
+        return modelAndView;
+    }
+
+    @PostMapping("")
+    public ModelAndView showListSorted(String Search) {
+        Iterable<Product> products = new ArrayList<>();
+        ModelAndView modelAndView = new ModelAndView("/product/list");
+        if (Search == null) {
+            products = productService.findAllByOrderByPrice();
+        } else {
+            products = productService.findByName(Search);
+            modelAndView.addObject("message", "back home");
+        }
         modelAndView.addObject("products", products);
         return modelAndView;
     }

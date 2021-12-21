@@ -13,7 +13,10 @@
 </center>
 <div align="center">
     <table border="1" cellpadding="5">
-        <caption><h2>List of Products</h2></caption>
+        <caption><h2>List of Products</h2>
+            <form style="text-align: right; margin:10px; font-size: 18px"  action="/products" method="post"><button type="submit">Sort</button>
+            </form>
+        </caption>
         <tr>
             <th>#</th>
             <th>Name</th>
@@ -24,13 +27,13 @@
             <th>Category</th>
         </tr>
         <tr th:each="product : ${products}">
-            <td th:text="${product.id}" ></td>
-            <td th:text="${product.name}" ></td>
-            <td th:text="${product.price}" ></td>
-            <td th:text="${product.getQuantity()}" ></td>
-            <td th:text="${product.getColor()}" ></td>
-            <td th:text="${product.getDescription()}" ></td>
-            <td th:text="${product.getCategory().getName()}" ></td>
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.getQuantity()}"></td>
+            <td th:text="${product.getColor()}"></td>
+            <td th:text="${product.getDescription()}"></td>
+            <td th:text="${product.getCategory().getName()}"></td>
             <td>
                 <a th:href="@{/products/edit/__${product.id}__ }">Edit</a>
                 <a th:href="@{/products/delete/__${product.id}__ }">Delete</a>
@@ -38,13 +41,13 @@
         </tr>
     </table>
     <br>
-    <!--    <form action="/">-->
-    <!--        <input type="text" placeholder="Search" name="Search">-->
-    <!--        <input type="submit" value="Search">-->
-    <!--    </form>-->
-    <!--    <c:if test="${backToProducts != null}">-->
-    <!--        <span class="message">${backToProducts}</span>-->
-    <!--    </c:if>-->
+    <form action="/products" method="get">
+        <input type="text" placeholder="Search" name="Search">
+        <input type="submit" value="Search">
+    </form>
+    <th:block th:if="${message}">
+        <a href="/products">Back to product list</a>
+    </th:block>
 </div>
 </body>
 </html>
