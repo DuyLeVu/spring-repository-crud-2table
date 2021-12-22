@@ -5,7 +5,7 @@
     <title>Edit product</title>
 </head>
 <body>
-<h1>Create new product</h1>
+<h1>Edit product</h1>
 <!--<th:block th:if="${message}">-->
 <!--    <p th:text="${message}"></p>-->
 <!--</th:block>-->
@@ -14,44 +14,50 @@
         <list></list>
     </a>
 </p>
-<form th:action="@{/products/edit-product}" th:object="${product}" method="post">
+<form th:action="@{/products/edit-product}" method="post" enctype="multipart/form-data">
     <fieldset>
         <legend>Product information</legend>
-        <input th:type="hidden" name="id" th:field="*{id}">
+        <input th:type="hidden" name="id" th:value="${product.getId()}">
         <table>
             <tr>
                 <td>Name:</td>
-                <td><input type="text" th:field="*{name}"/></td>
+                <td><input type="text" name="name" th:value="${product.getName()}" /></td>
             </tr>
             <tr>
                 <td>Price:</td>
-                <td><input type="text" th:field="*{price}"/></td>
+                <td><input type="text" name="price" th:value="${product.getPrice()}"/></td>
             </tr>
             <tr>
                 <td>Quantity:</td>
-                <td><input type="text" th:field="*{quantity}"/></td>
+                <td><input type="text" name="quantity" th:value="${product.getQuantity()}" /></td>
             </tr>
             <tr>
                 <td>Color:</td>
-                <td><input type="text" th:field="*{color}"/></td>
+                <td><input type="text" name="color" th:value="${product.getColor()}"/></td>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td><input type="text" th:field="*{description}"/></td>
+                <td><input type="text" name="description" th:value="${product.getDescription()}"/></td>
             </tr>
             <tr>
                 <td>Category:</td>
                 <td>
-                    <select th:field="*{category}">
+                    <select name="category">
                         <option value="">Category</option>
-                        <option th:each="category :${category}" th:value="${category.getId()}"
-                                th:text="${category.getName()}"></option>
+                        <option th:each="c :${category}" th:value="${c.getId()}"
+                                th:text="${c.getName()}"></option>
                     </select>
                 </td>
             </tr>
             <tr>
+                <td>New Image:</td>
+                <td>
+                    <input type="file" name="image1" th:value="${product.getImage()}">
+                </td>
+            </tr>
+            <tr>
                 <td></td>
-                <td><input type="submit" value="Create Product"></td>
+                <td><input type="submit" value="Update Product"></td>
             </tr>
         </table>
     </fieldset>

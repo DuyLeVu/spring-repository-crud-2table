@@ -59,12 +59,21 @@ public class ProductController {
     public ModelAndView showEditForm(@PathVariable int id) {
         Optional<Product> product = productService.findById(id);
         ModelAndView modelAndView = new ModelAndView("/product/edit");
-        modelAndView.addObject("product", product);
+        Product product1 = product.get();
+        modelAndView.addObject("product", product1);
         return modelAndView;
     }
 
     @PostMapping("/edit-product")
-    public String editProduct(Product product) {
+    public String editProduct(Product product, @RequestParam MultipartFile image1) {
+        String fileName = image1.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(image1.getBytes(),
+                    new File("E:\\Personal\\C0821I1_LeVuDuy\\Module Web Back-end Development with Spring MVC 2.0\\spring-repository-crud-2table\\src\\main\\webapp\\WEB-INF\\img\\" + fileName));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        product.setImage(fileName);
         productService.save(product);
         return "redirect:/products";
     }
