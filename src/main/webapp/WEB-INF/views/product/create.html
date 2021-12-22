@@ -14,38 +14,44 @@
         <list></list>
     </a>
 </p>
-<form th:action="@{/products/create-product}" th:object="${product}" method="post">
+<form th:action="@{/products/create-product}" method="post" enctype="multipart/form-data">
     <fieldset>
         <legend>Product information</legend>
         <table>
             <tr>
                 <td>Name:</td>
-                <td><input type="text" th:field="*{name}"/></td>
+                <td><input type="text" name="name"/></td>
             </tr>
             <tr>
                 <td>Price:</td>
-                <td><input type="text" th:field="*{price}"/></td>
+                <td><input type="text" name="price"/></td>
             </tr>
             <tr>
                 <td>Quantity:</td>
-                <td><input type="text" th:field="*{quantity}"/></td>
+                <td><input type="text" name="quantity"/></td>
             </tr>
             <tr>
                 <td>Color:</td>
-                <td><input type="text" th:field="*{color}"/></td>
+                <td><input type="text" name="color"/></td>
             </tr>
             <tr>
                 <td>Description:</td>
-                <td><input type="text" th:field="*{description}"/></td>
+                <td><input type="text" name="description"/></td>
             </tr>
             <tr>
                 <td>Category:</td>
                 <td>
-                    <select th:field="*{category}">
+                    <select name="category">
                         <option value="">Category</option>
-                        <option th:each="category :${category}" th:value="${category.getId()}"
-                                th:text="${category.getName()}"></option>
+                        <option th:each="c :${category}" th:value="${c.getId()}"
+                                th:text="${c.getName()}"></option>
                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Image:</td>
+                <td><label>Image</label>
+                    <input type="file" name="image1">
                 </td>
             </tr>
             <tr>

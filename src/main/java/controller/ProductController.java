@@ -8,11 +8,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import service.category.ICategoryService;
 import service.product.IProductService;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -38,9 +42,17 @@ public class ProductController {
     }
 
     @PostMapping("/create-product")
-    public String saveProduct(Product product) {
-        productService.save(product);
-        return "redirect:/products";
+    public String saveProduct(Product product, @RequestParam MultipartFile image1) {
+            String fileName = image1.getOriginalFilename();
+            try {
+                FileCopyUtils.copy(image1.getBytes(),
+                        new File("E:\\Personal\\C0821I1_LeVuDuy\\Module Web Back-end Development with Spring MVC 2.0\\spring-repository-crud-2table\\src\\main\\webapp\\WEB-INF\\img\\" + fileName));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            product.setImage(fileName);
+            productService.save(product);
+            return "redirect:/products";
     }
 
     @GetMapping("/edit/{id}")

@@ -17,6 +17,8 @@ public class Product {
     @JoinColumn(name = "categoryId")
     private Category category;
 
+    private String image;
+
     public Product() {
     }
 
@@ -35,6 +37,16 @@ public class Product {
         this.color = color;
         this.description = description;
         this.category = category;
+    }
+
+    public Product(String name, int price, int quantity, String color, String description, Category category, String image) {
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.color = color;
+        this.description = description;
+        this.category = category;
+        this.image = image;
     }
 
     public int getId() {
@@ -91,5 +103,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -26,6 +26,8 @@
             <th>Color</th>
             <th>Description</th>
             <th>Category</th>
+            <th>Image</th>
+            <th>Action</th>
         </tr>
         <tr th:each="product : ${products}">
             <td th:text="${product.id}"></td>
@@ -35,6 +37,7 @@
             <td th:text="${product.color}"></td>
             <td th:text="${product.description}"></td>
             <td th:text="${product.category.name}"></td>
+            <td><img width="50" height="50" th:src="@{'/img/'+${product.image}}" alt=""></td>
             <td>
                 <a th:href="@{/products/edit/__${product.id}__ }">Edit</a>
                 <a th:href="@{/products/delete/__${product.id}__ }">Delete</a>
