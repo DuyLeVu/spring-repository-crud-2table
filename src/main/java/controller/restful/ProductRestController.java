@@ -24,6 +24,15 @@ public class ProductRestController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> findProductById(@PathVariable int id) {
+        Optional<Product> productOptional = productService.findById(id);
+        if (!productOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(productOptional.get(), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
         productService.save(product);
