@@ -9,13 +9,18 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @OneToMany(targetEntity = Product.class)
-    private List<Product> productList;
+//    @OneToMany(targetEntity = Product.class)
+//    private List<Product> productList;
 
     public Category() {
     }
 
     public Category(String name) {
+        this.name = name;
+    }
+
+    public Category(int id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -35,12 +40,12 @@ public class Category {
         this.name = name;
     }
 
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
+//    public List<Product> getProductList() {
+//        return productList;
+//    }
+//
+//    public void setProductList(List<Product> productList) {
+//        this.productList = productList;
+//    }
 }
 
